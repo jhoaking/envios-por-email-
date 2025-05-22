@@ -3,16 +3,19 @@ import { catchAsync } from "middlewares/catchAsync";
 import { validateLogin, validateRegister } from "schema/authSchema";
 import { authService } from "services/authService";
 import { AuthTypes } from "types/authType";
+import { sendEmail } from "services/emailServices";
 
 export class authController {
   static register = catchAsync(
     async (req: Request, res: Response, _next: NextFunction) => {
       const vali = validateRegister(req.body);
-      
+
       const user = await authService.registerUser(vali);
+      await sendEmail(user.email, user.nombre);
+
       res.status(201).json({
         message: "usuario registrado con exito",
-        bienvenida: `Bienvenido ${user}!!`,
+        bienvenida: `Bienvenido ${user.nombre}!!`,
       });
     }
   );
@@ -34,8 +37,7 @@ export class authController {
         .cookie("access_token", token, options)
         .json({
           message: "El usuario inició sesión con éxito!",
-          bienvenida: `Bienvenido!! ${vali.email}`,
-          token
+          bienvenida: `Bienvenido!! ${vali.email}`
         });
     }
   );
@@ -57,10 +59,10 @@ export class authController {
     const user = req.user as AuthTypes;
     if (!user) {
       res.json({ message: "Usted no esta Autorizado para ingresar" });
-      return
+      return;
     }
 
-     res.status(200).json({ message: "Usuario autorizado", user });
-     return
+    res.status(200).json({ message: "Usuario autorizado", user });
+    return;
   };
 }

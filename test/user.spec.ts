@@ -77,15 +77,16 @@ describe("AUTH", () => {
     });
   });
 
-   describe("GET /protected", () => {
+  describe("GET /protected", () => {
     test("deberia mandar un 200 si se pudo acceder a la ruta protegida", async () => {
-      const loginUser =await request(app).post("/user/login").send(user);
+      const loginUser = await request(app).post("/user/login").send(user);
 
       const cookie = loginUser.headers["set-cookie"];
 
-      const res = await request(app).get("/user/protected").set("cookie",cookie);
-      expect(res.status).toBe(200)
-     
+      const res = await request(app)
+        .get("/user/protected")
+        .set("cookie", cookie);
+      expect(res.status).toBe(200);
     });
   });
 
@@ -95,6 +96,4 @@ describe("AUTH", () => {
       expect(res.status).toBe(200);
     });
   });
-
- 
 });

@@ -1,7 +1,11 @@
 import { app } from "app";
-import { PORT } from "config";
 
-app.listen(PORT, () =>{
-    console.log('server on port',PORT);
-    
+const port = 3150;
+app.get("/", (_req,res) =>{
+    res.send("jokdas")
+})
+
+
+app.listen(port, () =>{
+    console.log(`server running on http://localhost:${port}`);
 })
