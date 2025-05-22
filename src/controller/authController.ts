@@ -30,7 +30,7 @@ export class authController {
         maxAge: 24 * 60 * 60 * 1000,
       };
       res
-        .status(200)
+        .status(201)
         .cookie("access_token", token, options)
         .json({
           message: "El usuario inició sesión con éxito!",

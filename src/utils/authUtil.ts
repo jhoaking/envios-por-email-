@@ -18,7 +18,7 @@ export const comparePassword = async (
 export const createToken = (user: JwtPayload): string => {
   const token = jwt.sign(
     {
-      user_id: user.user_id,
+      usuario_id: user.usuario_id,
       nombre: user.nombre,
       email: user.email,
     },

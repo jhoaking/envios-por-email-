@@ -20,7 +20,7 @@ export class authService {
       throw new Error("Contraseña incorrecta");
     }
     const payload: JwtPayload = {
-      user_id: user.user_id,
+      usuario_id: user.usuario_id,
       nombre: user.nombre,
       email: user.email,
     };
