@@ -36,7 +36,7 @@
       "middlewares/*": ["middlewares/*"],
       "routes/*": ["routes/*"],
       "schema/*":["schema/*"],
-      "service/*" : ["service/*"],
+      "services/*" : ["services/*"],
       "model/*" : ["model/*"],
       "utils/*" : ["utils/*"],
       "error/*" : ["error/*"]

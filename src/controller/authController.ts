@@ -8,7 +8,6 @@ export class authController {
   static register = catchAsync(
     async (req: Request, res: Response, _next: NextFunction) => {
       const vali = validateRegister(req.body);
-      console.log(vali);
       
       const user = await authService.registerUser(vali);
       res.status(201).json({
@@ -36,6 +35,7 @@ export class authController {
         .json({
           message: "El usuario inició sesión con éxito!",
           bienvenida: `Bienvenido!! ${vali.email}`,
+          token
         });
     }
   );
