@@ -2,7 +2,7 @@ import { authModel } from "model/authModel";
 import { JwtPayload } from "jsonwebtoken";
 import { createToken, comparePassword } from "utils/authUtil";
 import { RegisterUserType } from "types/authType";
-//import { BadRequestError, NotFoundError } from "error/error";
+import { BadRequestError, NotFoundError } from "error/error";
 
 
 export class authService {
