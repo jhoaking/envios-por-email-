@@ -7,7 +7,6 @@ import { hashedPassword } from "utils/authUtil";
 export class authModel {
   static registrarUser = async (data: AuthType): Promise<AuthTypes> => {
     try {
-
       const query = `INSERT INTO usuarios_tb(nombre,email,contraseña)VALUES(?,?,?)`;
 
       const hashedPasswordd = await hashedPassword(data.contraseña);
@@ -30,11 +29,15 @@ export class authModel {
     }
   };
 
-  static verifyEmail = async (email: string) => {
+  static verifyEmail = async (
+    email: string
+  ) => {
     try {
       const query = `SELECT * FROM usuarios_tb WHERE email = ?`;
       const [rows] = await pool.query<RowDataPacket[]>(query, [email]);
-      return rows[0];
+      if (rows.length === 0) return null;
+
+      return rows[0] ;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
