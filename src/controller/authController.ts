@@ -11,7 +11,7 @@ export class authController {
       const vali = validateRegister(req.body);
 
       const user = await authService.registerUser(vali);
-      await sendEmail(user.email, user.nombre , "");
+      await sendEmail(user.email, user.nombre);
 
       res.status(201).json({
         message: "usuario registrado con exito",

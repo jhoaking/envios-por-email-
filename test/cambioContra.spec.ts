@@ -1,7 +1,6 @@
 import request from "supertest";
 import { app } from "../src/app";
-import { sendEmail } from "services/emailServices";
-
+import { sendEmailContra } from "services/emailServicesCambio";
 
 jest.mock("../src/model/authModel", () => ({
   authModel: {
@@ -20,8 +19,8 @@ jest.mock("../src/services/camboContraService", () => ({
   }),
 }));
 
-jest.mock("../src/services/emailServices", () => ({
-  sendEmail: jest.fn().mockResolvedValue(undefined),
+jest.mock("../src/services/emailServicesCambio", () => ({
+  sendEmailContra: jest.fn().mockResolvedValue(undefined),
 }));
 
 describe("CAMBIO CONTRA", () => {
@@ -31,7 +30,7 @@ describe("CAMBIO CONTRA", () => {
     test("deberia mandar un 201 si el email es el correcto", async () => {
       const res = await request(app).post("/reset-password").send(user);
       expect(res.status).toBe(201);
-      expect(sendEmail).toHaveBeenCalled();
+      expect(sendEmailContra).toHaveBeenCalled();
     });
   });
 });
