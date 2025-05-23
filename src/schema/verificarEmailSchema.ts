@@ -8,5 +8,5 @@ const validarEmailParaContra = z.object({
 });
 
 export const validarEmailCambioContra = (input: unknown) => {
-  return validarEmailParaContra.safeParse(input);
+  return validarEmailParaContra.parse(input);
 };

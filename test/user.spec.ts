@@ -5,16 +5,16 @@ import jwt from "jsonwebtoken";
 
 describe("AUTH", () => {
   const user = {
-    nombre: "test" + Date.now(),
-    email: "test" + Date.now() + "@gmail.com",
-    contraseña: "123456",
+ nombre: "Test",
+  email: "peredoroj@gmail.com", // un email que sí exista
+  contraseña: "123456",
   };
 
   describe("POST/register", () => {
     test("deberia mandar 201 si se registro con exito el usuario", async () => {
       const res = await request(app).post("/user/register").send(user);
       expect(res.status).toBe(201);
-    });
+    }) , 15000;
   });
 
   describe("POST /register", () => {

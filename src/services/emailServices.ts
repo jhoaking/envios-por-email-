@@ -11,17 +11,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendEmail = async (to: string, name: string) => {
+export const sendEmail = async (to: string, subject: string, text: string) => {
   const info = await transporter.sendMail({
     from: `"Mi App" <${process.env.EMAIL_USER}>`,
 
     to,
-    subject: "bienvenido a la plataforma",
-    text: `
-      Hola ${name},
-      Gracias por registrarte en nuestra aplicación.
-      ¡Esperamos que disfrutes de la experiencia!
-    `,
+    subject,
+    text
   });
   console.log("email enviado", info.messageId);
 };
