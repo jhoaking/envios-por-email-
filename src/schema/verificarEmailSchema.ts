@@ -6,11 +6,7 @@ const validarEmailParaContra = z.object({
     .min(1, { message: "El campo email es obligatorio" })
     .email({ message: "el email debe estar en formato valido" }),
 });
-export type EmailCambioType = z.infer<typeof validarEmailParaContra>;
 
-export const validarEmailCambioContra = (
-  input: unknown
-): EmailCambioType => {
- 
-  return validarEmailParaContra.parse(input);
+export const validarEmailCambioContra = (input: unknown) => {
+  return validarEmailParaContra.safeParse(input);
 };
