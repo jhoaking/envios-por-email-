@@ -3,7 +3,8 @@ import {
   ControlContraType,
 } from "types/guardarParaCambioDeContra";
 import { pool } from "../db";
-import { ResultSetHeader } from "mysql2";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
+import { ActualizarContraType } from "types/authType";
 
 export const cambioDeContra = async (
   data: ControlContraType
@@ -20,3 +21,42 @@ export const cambioDeContra = async (
     throw error;
   }
 };
+
+export const actualizarElCambioContra = async (
+  data: ActualizarContraType
+): Promise<CambioContraType> => {
+  try {
+    const query = `UPDATE usuarios_tb WHERE contraseña = ? AND usuario_id = ?`;
+    const [rows] = await pool.query(query,[data]);
+    return rows as CambioContraType;
+
+  } catch (error) {
+    console.error("Error al atualizar la contraseña:", error);
+    throw error;
+  }
+};
+
+export const verificarToken = async (
+  user_id: number,
+  token_id: number
+): Promise<CambioContraType | null> => {
+  try {
+    const query = `SELECT * FROM tokens_tb WHERE usuario_id = ? AND token_id = ? AND expiracion > NOW() `;
+    const values = [user_id , token_id];
+    const [rows] = await pool.query<RowDataPacket[]>(query,values);
+    if(rows.length === 0){return null}
+    return rows[0] as CambioContraType 
+  } catch (error) {
+   console.error("Error al obtenr la contraseña:", error);
+    throw error;
+  }
+};
+
+export const eliminarToken = async (token_id : number): Promise<{ message: string } | null>=>{
+  const query = `DELETE FROM tokens_tb WHERE token_id = ?`;
+  const [rows] = await pool.query<ResultSetHeader>(query, [token_id]);
+
+  if(rows.affectedRows === 0){return null}
+  return { message: "Se eliminóel token  con éxito" };
+
+}

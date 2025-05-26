@@ -6,3 +6,4 @@ export interface CambioContraType {
 }
 
 export type ControlContraType = Omit<CambioContraType , "token_id">
+
