@@ -26,12 +26,13 @@ export const actualizarElCambioContra = async (
   data: ActualizarContraType
 ): Promise<CambioContraType> => {
   try {
-    const query = `UPDATE usuarios_tb WHERE contraseña = ? AND usuario_id = ?`;
-    const [rows] = await pool.query(query,[data]);
-    return rows as CambioContraType;
+    const query = `UPDATE usuarios_tb SET contraseña = ? WHERE usuario_id = ?`;
+    const values = [data.contraseña, data.usuario_id];
+    await pool.query<ResultSetHeader>(query, values);
+    return { token_id: 0, usuario_id: data.usuario_id, token: '', expiracion: new Date() } as CambioContraType;
 
   } catch (error) {
-    console.error("Error al atualizar la contraseña:", error);
+    console.error("Error al actualizar la contraseña:", error);
     throw error;
   }
 };
